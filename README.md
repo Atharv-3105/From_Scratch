@@ -11,6 +11,7 @@ This repo is my journey into the internals of AI algorithms, implemented using r
 | Module           | Description                                                  |
 |------------------|--------------------------------------------------------------|
 | [`Attention/`](https://github.com/Atharv-3105/From_Scratch/tree/master/Attention)     | Implementations of Vanilla, Multi-Head, and Cross Attention.
+| [`Fine-Tuning/`](https://github.com/Atharv-3105/From_Scratch/tree/master/Fine-Tuning) | Fine-Tuned the OPT-125M model from Meta using LoRA.
 
 New modules and algorithms will be added regularly.
 
