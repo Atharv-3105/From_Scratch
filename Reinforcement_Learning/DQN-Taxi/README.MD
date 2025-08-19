@@ -14,8 +14,16 @@ The goal is to demonstrate how DQN learns to pick up and drop off passengers opt
   - **Target Network** → stabilizes learning by using a separate Q-network for bootstrapping.  
 - Objective: minimize the Temporal Difference (TD) error:  
 
-\[
-L(\theta) = \mathbb{E}_{(s,a,r,s') \sim \mathcal{D}} \Big[ \big( r + \gamma \max_{a'} Q_{\theta^-}(s',a') - Q_{\theta}(s,a) \big)^2 \Big]
-\]
+---
+## 📈 Results
+
+- The DQN agent learns to minimize penalties and efficiently complete the task.
+
+- Training logs & metrics are tracked using Weights & Biases (wandb).
+
+[🔗WandB Logs](https://wandb.ai/atharv3105-dr-a-p-j-abdul-kalam-technical-university/DQN_Taxi/runs/e5xnattq)
 
 ---
+## References
+
+- [Playing Atari with Deep Reinforcement Learning (Mnih et al., 2013)](https://arxiv.org/abs/1312.5602)
