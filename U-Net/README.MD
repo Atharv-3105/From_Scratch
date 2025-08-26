@@ -20,7 +20,7 @@ The U-Net consists of:
 4. **Skip Connections** – combine high-resolution features from encoder with decoder outputs.
 
 <p align="center">
-  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Flmb.informatik.uni-freiburg.de%2Fpeople%2Fronneber%2Fu-net%2F&psig=AOvVaw3-IOLkHMY6Z9NhBPRdh7WO&ust=1756301887127000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCICunMXMqI8DFQAAAAAdAAAAABAE" width="500"/>
+  <img src="save_imgs/u-net-architecture.png" width="500"/>
 </p>
 
 ---
