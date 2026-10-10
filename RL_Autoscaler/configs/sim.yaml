@@ -1,0 +1,10 @@
+reference_window: 5   # R = the biggest demand seen in the last 5 minutes
+rho:  10              # price of one cold start, in idle-instance-minutes
+kappa: 0.1            # price of starting one extra instance(0 = Free to scale)
+actions: 
+  - [absolute, 0]     # 0: Scale to Zero
+  - [absolute, 1]     # 1: Keep Exactly one warm
+  - [relative, "1/2"] # 2: half of R, rounded up
+  - [relative, "1"]   # 3: R
+  - [relative, "3/2"] # 4: 1.5 x R, rounded up
+  - [relative, "2"]   # 5: 2 x R

@@ -1,0 +1,18 @@
+seed: 2026 
+split_unit: owner #Meaning all functions of 1 owner always land in the same split set
+fractions:
+  train: 0.70
+  val: 0.15
+  test: 0.15 
+days:
+  train: [1,2,3,4,5,6,7,8,9,10]
+  val: [11, 13] #One weekday + one Weekend Day
+  test: [12, 14]  #One weekday + one weekend Day
+
+weekend_days: [6, 7, 13, 14] #These days have 22% fewer active functions
+cells:
+  train: {functions: train, days: train}
+  val:   {functions: val, days: val}
+  test_days: {functions: train, days: test}  #Report: New Days, Known Function
+  test_functions: {functions: test, days: train} #Report: New Functions, Known Days
+  test_both: {functions: test, days: test}   #Report: new functions and new days

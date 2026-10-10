@@ -1,0 +1,14 @@
+# FROZEN. Chosen from train-day (1-10) distributions only. Never edit after seeing validation/test results.
+train_days:
+  first: 1
+  last: 10
+thresholds:
+  rare_rate_per_hour: 1.0       # rate < 1 invocation/hour, counted over the days the function is alive
+  hot_rate_per_hour: 60.0       # about the top 10% of functions by rate on train days (59.6)
+  periodic_corr: 0.9            # average day-over-day correlation of per-minute counts
+  bursty_score: 5.0             # within-hour variance / mean of per-minute counts; steady random traffic = 1
+group_priority: [periodic, bursty, hot, rare]   # first match wins, otherwise "normal"
+subset:
+  size: 4000
+  min_per_group: 400
+  seed: 0
