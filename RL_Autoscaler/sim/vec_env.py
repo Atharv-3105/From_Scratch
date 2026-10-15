@@ -71,7 +71,7 @@ class VecWarmPoolEnv:
         if self.minute >= self.length:
             raise RuntimeError("the episode is over, call reset()")
         actions = np.asarray(actions)
-        if actions.shape != (self.n_episodes):
+        if actions.shape != (self.n_episodes, ):
             raise ValueError(f"Expected one action per episode, shape ({self.n_episodes})")
         
         if actions.min() < 0 or actions.max() >= self.n_actions:

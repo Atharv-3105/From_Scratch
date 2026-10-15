@@ -16,6 +16,9 @@ def build_demand(counts, dur_ms, concurrency: int = 1, chunk_size = 20_000):
                         work = invocations * durations(instance-milliseconds of work in the minute)
                         capacity = 60_000 * concurrency (what one instance can do in a minute)
     """
+    if concurrency < 1 or int(concurrency) != concurrency:
+        raise ValueError("concurrency must be a whole number >= 1")
+    
     
     if np.isnan(dur_ms).any() or (dur_ms < 0).any():
         raise ValueError("dur_ms must not contain NaN or negative values")

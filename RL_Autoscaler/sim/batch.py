@@ -99,3 +99,22 @@ def build_batch(table, demand, row_ids, constants, window = 5):
         "mem_mb": table["mem_mb"].to_numpy()[row_ids],
         "previous_demand": previous, 
     }
+    
+def previous_day(table, demand, row_ids):
+    """ 
+        For each chosen row, the same function's previous day(a full row of demand), or
+        zeros if that day has no row
+    """
+    row_ids = np.asarray(row_ids)
+    func_ids = table["func_id"].to_numpy()
+    days = table["day"].to_numpy()
+    row_of = {(f, d): i for i, (f, d) in enumerate(zip(func_ids, days))}
+    
+    out = np.zeros((len(row_ids), demand.shape[1]), dtype = np.int64)
+    for k, row in enumerate(row_ids):
+        before = row_of.get((func_ids[row], days[row] - 1))
+        if before is not None:
+            out[k] = demand[before]
+            
+    
+    return out 

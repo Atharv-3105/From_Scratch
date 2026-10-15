@@ -49,7 +49,7 @@ def stream_invocations(feather_path, out_dir):
 def load_invocations(out_dir):
     out_dir = Path(out_dir)
     keys = pd.read_parquet(out_dir / KEYS_FILE)
-    minutes = np.memmap(out_dir / KEYS_FILE, dtype = MINUTE_DTYPE, mode = "r").reshape(-1, N_MIN)
+    minutes = np.memmap(out_dir / MINUTES_FILE, dtype = MINUTE_DTYPE, mode = "r").reshape(-1, N_MIN)
     if len(keys) != minutes.shape[0]:
         raise ValueError("keys and minute matrix are misaligned")
     

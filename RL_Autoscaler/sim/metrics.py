@@ -49,26 +49,20 @@ def churn_and_reversals(pool, initial_pool = 0):
     # +1 = scale up, -1 = scale down, 0 = no change
     direction = np.sign(change)
     
-    #For every minute, the position of the latest earlier minute where the pool actually changed
-    last_move = np.maximum.accumulate(np.where(direction != 0, np.arange(pool.shape[1]), -1), axis = 1)
+    # +1 / -1 = the latest real move of each episode, 0 = it has not moved yet
+    last_direction = np.zeros(pool.shape[0], dtype = np.int64)
     reversals = np.zeros(pool.shape[0], dtype = np.int64)
     
-    #process one minute at a time, but process all episodes simulatenously
+    #one minute at a time, all episodes together
     for minute in range(pool.shape[1]):
         current = direction[:, minute]
         
-        #A reversal occurs when the new direction differs from the previous non-zero direction
-        changed_direction = ((current != 0) & (last_move != 0) & (current != last_move))
-        reversals += changed_direction.astype(np.int64)
+        #A reversal: this minute moves, an earlier minute moved and the directions differ
+        reversals += ((current != 0) & (last_direction != 0) & (current != last_direction)).astype(np.int64)
         
-        #Only an actual change updates the last-direction, A zero change leaves the previous direction untouched
+        #Only a real move updates the stored direction; a zero change keeps the old one
         last_direction = np.where(current != 0, current, last_direction)
         
-        
-    # earlier_move = np.concatenate([np.full((pool.shape[0], 1), -1), last_move[:, :-1]], axis = 1)
-    # earlier_direction = np.where(earlier_move >= 0, np.take_along_axis(direction, np.maximum(earlier_move, 0), axis = 1), 0)
-    
-    # reversals = ((direction != 0) & (earlier_direction != 0) & (direction != earlier_direction)).sum(axis = 1)
     
     return churn, reversals 
 

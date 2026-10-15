@@ -46,7 +46,7 @@ def build_function_day_table(keys, duration, memory, train_days = range(1, 11)):
     output = output.merge(app_mem, on = APP_KEYS, how = "left", validate = "many_to_one")
     output["mem_mb"] = output["app_mb"]
     output["mem_source"] = np.where(output["mem_mb"].notna(), "app_median", "")
-    global_mem = memory["AverageAllocatedMb"].median()
+    global_mem = m["AverageAllocatedMb"].median()
     fill(output, "mem_mb", "mem_source", pd.Series(global_mem, index = output.index), "global")
     output = output.drop(columns = "app_mb")
     

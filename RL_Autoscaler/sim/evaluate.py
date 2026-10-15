@@ -52,7 +52,7 @@ def evaluate_policy(policy, table, demand, counts, rows, constants, sim_config, 
         part["reward"] = summary["reward"]
         results.append(part)
         
-    return pd.concate(results, ignore_index = True)
+    return pd.concat(results, ignore_index = True)
 
 def evaluate_cell(policy, cell_name, table, demand, counts, splits_config, constants, sim_config, batch_size = 512):
     """ 
@@ -61,4 +61,4 @@ def evaluate_cell(policy, cell_name, table, demand, counts, splits_config, const
         pass it through to_per_function() before summarize() and bootstrap_ci()
     """
     rows = np.nonzero(cell_mask(table, cell_name, splits_config).to_numpy())[0]
-    return evaluate_cell(policy, table, demand, counts, rows, constants, sim_config, batch_size)
+    return evaluate_policy(policy, table, demand, counts, rows, constants, sim_config, batch_size)
