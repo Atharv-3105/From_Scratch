@@ -32,7 +32,6 @@ def evaluate_policy(policy, table, demand, counts, rows, constants, sim_config, 
         cold = np.zeros((len(chunk), minutes), dtype = np.int64)
         for t in range(minutes):
             _, _, _, info = env.step_pool(policy(env))
-            
             pool[:, t], cold[:, t] = info["pool"], info["cold"]
             
         summary = env.summary()
@@ -50,6 +49,10 @@ def evaluate_policy(policy, table, demand, counts, rows, constants, sim_config, 
         part["reversals"] = reversals 
         part["minutes"] = minutes 
         part["reward"] = summary["reward"]
+        part["cold_instances"] = summary["cold"]
+        part["idle_instances"] = summary["idle"]
+        part["starts"] = summary["start"]
+        part["scale"] = batch["scale"]
         results.append(part)
         
     return pd.concat(results, ignore_index = True)

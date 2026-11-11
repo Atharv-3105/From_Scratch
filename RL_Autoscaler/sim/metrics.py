@@ -2,6 +2,8 @@ from pathlib import Path
 import numpy as np 
 import pandas as pd 
 
+
+COST_COLUMNS = ["cold_instances", "idle_instances", "starts"]
 #The metrics that can be summed across multiple days of one function
 SUM_COLUMNS = ["invocations", "cold_inv", "idle_gbmin", "served", "pool_minutes", "churn", "reversals", "minutes", "reward"]
 
@@ -82,7 +84,23 @@ def to_per_function(episodes):
     #Count how many function-days contributed to each row
     day_counts = episodes.groupby("func_id").size().rename("n_days")
     
-    return (metadata.join(sums).join(day_counts).reset_index())
+    result = metadata.join(sums).join(day_counts)
+    
+    #the raw cost counts let us recompute the reward for any cold-start price(only when the harness provided them)
+    if all(name in episodes for name in COST_COLUMNS):
+        result = result.join(episodes.groupby("func_id")[COST_COLUMNS].sum()).join(episodes.groupby("func_id")["scale"].first())
+    
+    return result.reset_index()
+
+def reward_at(per_function, rho, kappa):
+    """ 
+        Average reward per function-day(weighted) if one cold start costs rho idle-minutes and starting an instance costs kapss
+    """
+    cost = rho * per_function["cold_instances"] + per_function["idle_instances"] + kappa * per_function["starts"]
+    reward = -cost / per_function["scale"]
+    weight = per_function["weight"]
+    return float((weight * reward).sum() / (weight * per_function["n_days"]).sum())
+
     
 def _columns(per_function):
     """ 
